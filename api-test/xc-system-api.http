@@ -1,0 +1,3 @@
+
+### 课程分类查询
+GET {{system_host}}/system/course-category/tree-nodes
