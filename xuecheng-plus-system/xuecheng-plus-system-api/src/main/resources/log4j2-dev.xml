@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration monitorInterval="180" packages="">
     <properties>
-    	<property name="prjname">xc-content-service</property>
         <property name="logdir">logs</property>
-        <property name="PATTERN">[${prjname}] %date{YYYY-MM-dd HH:mm:ss,SSS} %level [%thread][%file:%line] - %msg%n%throwable</property>
+        <property name="PATTERN">%date{YYYY-MM-dd HH:mm:ss,SSS} %level [%thread][%file:%line] - %msg%n%throwable</property>
     </properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${PATTERN}"/>
         </Console>
 
-        <RollingFile name="ErrorAppender" fileName="${logdir}/${prjname}_error.log"
-            filePattern="${logdir}/$${date:yyyy-MM-dd}/${prjname}_error.%d{yyyy-MM-dd-HH}.log" append="true">
+        <RollingFile name="ErrorAppender" fileName="${logdir}/error.log"
+            filePattern="${logdir}/$${date:yyyy-MM-dd}/error.%d{yyyy-MM-dd-HH}.log" append="true">
             <PatternLayout pattern="${PATTERN}"/>
             <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
             <Policies>
@@ -19,8 +18,8 @@
             </Policies>
         </RollingFile>
 
-        <RollingFile name="DebugAppender" fileName="${logdir}/${prjname}_info.log"
-            filePattern="${logdir}/$${date:yyyy-MM-dd}/${prjname}_info.%d{yyyy-MM-dd-HH}.log" append="true">
+        <RollingFile name="DebugAppender" fileName="${logdir}/info.log"
+            filePattern="${logdir}/$${date:yyyy-MM-dd}/info.%d{yyyy-MM-dd-HH}.log" append="true">
             <PatternLayout pattern="${PATTERN}"/>
             <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
             <Policies>

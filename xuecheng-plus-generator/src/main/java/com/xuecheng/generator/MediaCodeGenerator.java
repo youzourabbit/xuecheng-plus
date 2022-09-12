@@ -19,9 +19,13 @@ public class MediaCodeGenerator {
 	private static final String SERVICE_NAME = "media";
 
 	private static final String DATA_SOURCE_USER_NAME  = "root";
-	private static final String DATA_SOURCE_PASSWORD  = "itcast140";
+	private static final String DATA_SOURCE_PASSWORD  = "mysql";
 	private static final String[] TABLE_NAMES = new String[]{
-			"media",
+			"media_files",
+			"media_process",
+			"media_process_history",
+			"mq_message",
+			"mq_message_history"
 			// "live_course",
 	};
 
@@ -54,9 +58,9 @@ public class MediaCodeGenerator {
 		// 数据库配置
 		DataSourceConfig dsc = new DataSourceConfig();
 		dsc.setDbType(DbType.MYSQL);
-		dsc.setUrl("jdbc:mysql://192.168.94.129:3306/xc_" + SERVICE_NAME
+		dsc.setUrl("jdbc:mysql://192.168.101.65:3306/xcplus_media"
 				+ "?useUnicode=true&useSSL=false&characterEncoding=utf8");
-		dsc.setDriverName("com.mysql.jdbc.Driver");
+		dsc.setDriverName("com.mysql.cj.jdbc.Driver");
 		dsc.setUsername(DATA_SOURCE_USER_NAME);
 		dsc.setPassword(DATA_SOURCE_PASSWORD);
 		mpg.setDataSource(dsc);
@@ -84,7 +88,8 @@ public class MediaCodeGenerator {
 		strategy.setRestControllerStyle(true);
 		strategy.setInclude(TABLE_NAMES);
 		strategy.setControllerMappingHyphenStyle(true);
-		strategy.setTablePrefix(pc.getModuleName() + "_");
+		//此项是将生成的po类名中去掉pc.getModuleName() + "_"
+//		strategy.setTablePrefix(pc.getModuleName() + "_");
 		// Boolean类型字段是否移除is前缀处理
 		strategy.setEntityBooleanColumnRemoveIsPrefix(true);
 		strategy.setRestControllerStyle(true);
