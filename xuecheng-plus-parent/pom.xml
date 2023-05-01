@@ -193,6 +193,7 @@
     <!--作为父工程，引进自己管理的模块-->
     <modules>
         <module>../xuecheng-plus-base</module>
+        <module>../xuecheng-plus-content</module>
     </modules>
 
     <build>

@@ -1,6 +1,5 @@
 # 本gitignore借鉴自黑马《学成在线》第一章的环境搭建文档，对一个完整的项目搭建有很大借鉴意义
 
-# Java
 HELP.md
 target/
 !.mvn/wrapper/maven-wapper.jar
