@@ -1,0 +1,12 @@
+###
+# 向service尝试发起请求，每页加载2条数据，加载第一页，附带一条json数据限定请求的内容
+# POST http://localhost:63040/content/course/list?pageSize=2&pageNo=1
+
+# 使用http-client.env.json配置环境
+POST {{content_host}}/content/course/list?pageSize=2&pageNo=1
+Content-Type: application/json
+
+{
+  "audioStatus": "202004",
+  "course": "java"
+}
