@@ -23,7 +23,7 @@ public class DictionaryController  {
 
     @Autowired
     private DictionaryService  dictionaryService;
-
+//查询数据字典
     @GetMapping("/dictionary/all")
     public List<Dictionary> queryAll() {
         return dictionaryService.queryAll();
