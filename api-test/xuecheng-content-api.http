@@ -10,3 +10,6 @@ Content-Type: application/json
   "audioStatus": "202004",
   "course": "java"
 }
+
+###
+GET http://localhost:63040/content/course-category/tree-nodes

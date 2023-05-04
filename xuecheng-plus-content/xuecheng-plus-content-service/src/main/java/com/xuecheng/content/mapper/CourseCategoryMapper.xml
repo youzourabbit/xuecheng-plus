@@ -4,18 +4,38 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.xuecheng.content.model.po.CourseCategory">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="label" property="label" />
-        <result column="parentid" property="parentid" />
-        <result column="is_show" property="isShow" />
-        <result column="orderby" property="orderby" />
-        <result column="is_leaf" property="isLeaf" />
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="label" property="label"/>
+        <result column="parentid" property="parentid"/>
+        <result column="is_show" property="isShow"/>
+        <result column="orderby" property="orderby"/>
+        <result column="is_leaf" property="isLeaf"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, label, parentid, is_show, orderby, is_leaf
+        id
+        , name, label, parentid, is_show, orderby, is_leaf
     </sql>
+
+    <!--
+    resultType使用场合：查询出的结果集需要映射到对象中，而查询出的数据只要能够对应，就只需resultType，无需resultMap。
+    resultMap使用场合：查询出的字段名，与对象不一致，需要使用ResultMap进行重新映射
+    -->
+    <select id="selectTreeNode" parameterType="String" resultType="com.xuecheng.content.model.dto.CourseCategoryTreeDto">
+        with recursive t1 as (select *
+                              from course_category
+                              where id = #{id} /*拿到表的树根*/
+                              union all
+                              select t2.*
+                              from course_category t2
+                                       inner join t1 on t1.id = t2.parentid
+            /* SQL语义：将原先的数据表与整张表内连接*/
+        )
+        select *
+        from t1
+        order by t1.id,t1.orderby
+    </select>
 
 </mapper>
