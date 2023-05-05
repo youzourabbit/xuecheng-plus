@@ -18,6 +18,6 @@ public class CourseCategoryController {// ?估计是创建了一个模型类 ==>
     @GetMapping("course-category/tree-nodes")
     public List<CourseCategoryTreeDto> queryTreeNodes(){
         // 此时需要对子节点进行处理
-        return courseCategoryService.queryTreeNodes("1");//本方法是查询所有，直接把根节点放进即可
+        return courseCategoryService.queryTreeNodes("1");//本方法是查询所有，直接把根节点放进即可。返回的是一个根节点带着若干子节点，不过
     }
 }
