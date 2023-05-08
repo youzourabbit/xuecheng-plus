@@ -14,6 +14,9 @@ import javax.validation.constraints.Size;
 @ApiModel(value = "AddCourse",description = "新增课程基本信息")
 public class AddCourseDto {
 
+    /*@NotEmpty(message = "新增课程时，课程id不能为空",groups = {ValidationGroups.Insert.class})
+    private Long courseId;*/
+
 
     /* 使用这个注解可以方便进行报错的操作，但若是想要用一个方法处理不同形式的请求（例如get、post、delete，他们对数据排查肯定是会有点差异的）
     * 那么就不得不提到分组。
