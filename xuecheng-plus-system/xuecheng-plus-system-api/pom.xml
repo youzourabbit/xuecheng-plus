@@ -82,6 +82,13 @@
             <artifactId>swagger-spring-boot-starter</artifactId>
         </dependency>
 
+        <!--引入base模块为依赖-->
+        <dependency>
+            <groupId>com.xuecheng</groupId>
+            <artifactId>xuecheng-plus-base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
 
     </dependencies>
 

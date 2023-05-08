@@ -11,9 +11,17 @@
 
 
     <dependencies>
+
         <dependency>
             <groupId>com.xuecheng</groupId>
             <artifactId>xuecheng-plus-content-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!--导入base作为api的依赖-->
+        <dependency>
+            <groupId>com.xuecheng</groupId>
+            <artifactId>xuecheng-plus-base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!--cloud的基础环境包-->
@@ -61,7 +69,7 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <!--swagger自动生成API-->
+        <!--swagger自动生成API接口文档-->
         <!--<dependency>
             <groupId>com.spring4all</groupId>
             <artifactId>swagger-spring-boot-starter</artifactId>
