@@ -4,27 +4,111 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.xuecheng.content.model.po.Teachplan">
-        <id column="id" property="id" />
-        <result column="pname" property="pname" />
-        <result column="parentid" property="parentid" />
-        <result column="grade" property="grade" />
-        <result column="media_type" property="mediaType" />
-        <result column="start_time" property="startTime" />
-        <result column="end_time" property="endTime" />
-        <result column="description" property="description" />
-        <result column="timelength" property="timelength" />
-        <result column="orderby" property="orderby" />
-        <result column="course_id" property="courseId" />
-        <result column="course_pub_id" property="coursePubId" />
-        <result column="status" property="status" />
-        <result column="is_preview" property="isPreview" />
-        <result column="create_date" property="createDate" />
-        <result column="change_date" property="changeDate" />
+        <id column="id" property="id"/>
+        <result column="pname" property="pname"/>
+        <result column="parentid" property="parentid"/>
+        <result column="grade" property="grade"/>
+        <result column="media_type" property="mediaType"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="description" property="description"/>
+        <result column="timelength" property="timelength"/>
+        <result column="orderby" property="orderby"/>
+        <result column="course_id" property="courseId"/>
+        <result column="course_pub_id" property="coursePubId"/>
+        <result column="status" property="status"/>
+        <result column="is_preview" property="isPreview"/>
+        <result column="create_date" property="createDate"/>
+        <result column="change_date" property="changeDate"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, pname, parentid, grade, media_type, start_time, end_time, description, timelength, orderby, course_id, course_pub_id, status, is_preview, create_date, change_date
     </sql>
+
+
+    <!--type:数据最终返回的类型,需要自主进行手动映射
+    如：要将one.id映射到TeachPlanDto中-->
+    <resultMap id="treeNodeResultMap" type="com.xuecheng.content.model.dto.TeachplanDto">
+
+        <id column="one_id" property="id"/>
+        <result column="one_pname" property="pname"/>
+        <result column="one_parentid" property="parentid"/>
+        <result column="one_grade" property="grade"/>
+        <result column="one_mediaType" property="mediaType"/>
+        <result column="one_startTime" property="startTime"/>
+        <result column="one_endTime" property="endTime"/>
+        <result column="one_orderby" property="orderby"/>
+        <result column="one_courseId" property="courseId"/>
+        <result column="one_coursePubId" property="coursePubId"/>
+        <!--映射子节点（多个子节点，使用collection,ofType:list当中的内容对象类型），TeachPlanDto内部属性名不一致，所以进行手动映射
+        List内的泛型使用ofType来映射-->
+        <collection property="teachPlanTreeNodes" ofType="com.xuecheng.content.model.dto.TeachplanDto">
+
+            <id column="two_id" property="id"/>
+            <result column="two_pname" property="pname"/>
+            <result column="two_parentid" property="parentid"/>
+            <result column="two_grade" property="grade"/>
+            <result column="two_mediaType" property="mediaType"/>
+            <result column="two_startTime" property="startTime"/>
+            <result column="two_endTime" property="endTime"/>
+            <result column="two_orderby" property="orderby"/>
+            <result column="two_courseId" property="courseId"/>
+            <result column="two_coursePubId" property="coursePubId"/>
+            <!--小章节内部需要一对一的映射，对应媒体内容。（association），准确的对象使用javaType类型映射-->
+            <association property="teachplanMedia" javaType="com.xuecheng.content.model.po.TeachplanMedia">
+                <result column="teachplanMediaId" property="id"/>
+                <result column="mediaFileName" property="mediaFilename"/>
+                <result column="mediaId" property="mediaId"/>
+                <result column="two_id" property="teachplanId"/>
+                <result column="two_course" property="courseId"/>
+                <result column="two_coursePubId" property="coursePubId"/>
+            </association>
+        </collection>
+    </resultMap>
+
+    <!--因为本数据是多表拼接而成，所以这里就使用resultMap；
+    resultType有一个类一一对应，并且返回响应数据
+    # one.id            one_id,
+            # one.pname         one_pname,
+            # two.id            two_id,
+            # two.pname         two_pname,
+            # tm.media_fileName media_fileName,
+            # tm.media_id       media_id,
+            # 以下字段名来自文档复制粘贴，实际上编写时这些字段都需要自己敲，因为json
+            # 响应内容就是有这么多-->
+    <select id="selectTreeNodes" parameterType="long" resultMap="treeNodeResultMap">
+        select one.id            one_id,
+               one.pname         one_pname,
+               one.parentid      one_parentid,
+               one.grade         one_grade,
+               one.media_type    one_mediaType,
+               one.start_time    one_stratTime,
+               one.end_time      one_endTime,
+               one.orderby       one_orderby,
+               one.course_id     one_courseId,
+               one.course_pub_id one_coursePubId,
+               two.id            two_id,
+               two.pname         two_pname,
+               two.parentid      two_parentid,
+               two.grade         two_grade,
+               two.media_type    two_mediaType,
+               two.start_time    two_stratTime,
+               two.end_time      two_endTime,
+               two.orderby       two_orderby,
+               two.course_id     two_courseId,
+               two.course_pub_id two_coursePubId,
+               tm.media_fileName mediaFilename,
+               tm.id             teachplanMeidaId,
+               tm.media_id       mediaId
+        from teachplan one
+                 inner join teachplan two on two.parentid = one.id
+                 left join teachplan_media tm on one.id = tm.teachplan_id
+        where one.parentid = 0
+          and one.course_id = #{id}
+        order by one.orderby, two.orderby
+    </select>
+
 
 </mapper>

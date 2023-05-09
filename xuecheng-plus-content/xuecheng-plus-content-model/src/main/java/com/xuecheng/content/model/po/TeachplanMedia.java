@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 @TableName("teachplan_media")
 public class TeachplanMedia implements Serializable {
 
+    // 啥时候创建的？？？
+
     private static final long serialVersionUID = 1L;
 
     /**
