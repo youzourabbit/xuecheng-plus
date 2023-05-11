@@ -1,18 +1,17 @@
 package com.xuecheng.content.api;
 
+import com.xuecheng.content.model.dto.SaveTeachplanDto;
 import com.xuecheng.content.model.dto.TeachplanDto;
 import com.xuecheng.content.service.TeachplanService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(value = "课程计划编辑接口",tags = "课程计划编辑接口")
+@Api(value = "课程计划编辑接口", tags = "课程计划编辑接口")
 @RestController
 public class TeachplanController {
 
@@ -21,11 +20,20 @@ public class TeachplanController {
 
     // 查询课程计划
     @ApiOperation("查询课程计划树形结构")
-    @ApiImplicitParam(value = "courseId",name = "课程Id",required = true,dataType = "Long",paramType = "path")
+    @ApiImplicitParam(value = "courseId", name = "课程Id", required = true, dataType = "Long", paramType = "path")
     @GetMapping("/teachplan/{courseId}/tree-nodes")
-    private List<TeachplanDto> getTeachNodes(@PathVariable Long courseId){
+    private List<TeachplanDto> getTeachNodes(@PathVariable Long courseId) {
+
+        //此处留有bug返回的数据将会遗漏一些没有子节点的数据
         List<TeachplanDto> teachplanTree = teachplanService.findTeachplanTree(courseId);
         return teachplanTree;
+    }
+
+    @ApiOperation("课程计划创建或修改")
+    @PostMapping("/teachplan")
+    private void saveTeachplan(@RequestBody SaveTeachplanDto teachplanDto) {
+
+        teachplanService.saveTeachplan(teachplanDto);
     }
 
 }

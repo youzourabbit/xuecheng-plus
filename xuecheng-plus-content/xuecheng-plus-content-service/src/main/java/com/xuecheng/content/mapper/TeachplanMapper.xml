@@ -78,6 +78,11 @@
             # tm.media_id       media_id,
             # 以下字段名来自文档复制粘贴，实际上编写时这些字段都需要自己敲，因为json
             # 响应内容就是有这么多-->
+
+    <!--程序调试————selectTreeNodes找不到没有叶子节点的章节的原因
+    推测：where two.parentId=one.id
+    解决方案1：将没有任何叶子节点的章节进行单独返回
+    解决方案2：在创建新章节的同时，新建一个小章节、在删除任何一个章节的最后一个小章节，都必须把大章节删除-->
     <select id="selectTreeNodes" parameterType="long" resultMap="treeNodeResultMap">
         select one.id            one_id,
                one.pname         one_pname,
@@ -103,7 +108,7 @@
                tm.id             teachplanMeidaId,
                tm.media_id       mediaId
         from teachplan one
-                 inner join teachplan two on two.parentid = one.id
+                 left join teachplan two on two.parentid = one.id
                  left join teachplan_media tm on one.id = tm.teachplan_id
         where one.parentid = 0
           and one.course_id = #{id}
