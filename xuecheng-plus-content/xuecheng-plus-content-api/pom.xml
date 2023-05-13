@@ -69,6 +69,11 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <!--nacos注册中心(写在内容管理模块中的接口工程)-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
         <!--swagger自动生成API接口文档-->
         <!--<dependency>
             <groupId>com.spring4all</groupId>

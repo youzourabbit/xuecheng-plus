@@ -11,6 +11,12 @@ spring:
     url: jdbc:mysql://192.168.153.135:3306/xuecheng-content?serverTimezone=UTC&userUnicode=true&useSSL=false&
     username: root
     password: root
+  cloud:
+    nacos:
+      server-addr: 192.168.153.135:8849
+      discovery:
+        namespace: dev
+        group: xuecheng-plus-project
 
 # 日志文件配置路径
 logging:

@@ -20,4 +20,6 @@ public interface TeachplanService {
     List<TeachplanDto> findTeachplanTree(Long courseId);
 
     void saveTeachplan(SaveTeachplanDto teachplanDto);
+
+    void deleteTeachplan(Long courseId);
 }

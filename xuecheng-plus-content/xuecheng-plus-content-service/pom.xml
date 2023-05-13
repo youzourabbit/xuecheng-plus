@@ -10,6 +10,12 @@
     <artifactId>xuecheng-plus-content-service</artifactId>
 
     <dependencies>
+
+        <!--nacos注册中心(写在内容管理模块中的接口工程)-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.xuecheng</groupId>
             <artifactId>xuecheng-plus-content-model</artifactId>

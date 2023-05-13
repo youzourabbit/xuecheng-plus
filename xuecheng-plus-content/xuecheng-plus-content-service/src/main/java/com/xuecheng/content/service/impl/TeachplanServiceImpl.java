@@ -57,4 +57,9 @@ public class TeachplanServiceImpl implements TeachplanService {
         }
     }
 
+    @Override
+    public void deleteTeachplan(Long courseId) {
+        teachplanMapper.deleteById(courseId);
+    }
+
 }

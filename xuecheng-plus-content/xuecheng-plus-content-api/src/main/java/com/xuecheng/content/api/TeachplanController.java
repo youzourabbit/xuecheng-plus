@@ -32,8 +32,14 @@ public class TeachplanController {
     @ApiOperation("课程计划创建或修改")
     @PostMapping("/teachplan")
     private void saveTeachplan(@RequestBody SaveTeachplanDto teachplanDto) {
-
+// 添加章还是添加小节，由请求体重的json文件决定
         teachplanService.saveTeachplan(teachplanDto);
+    }
+
+    @ApiOperation("删除课程计划")
+    @DeleteMapping("/teachplan/{courseId}")
+    private void deleteTeachplan(@PathVariable Long courseId){
+        teachplanService.deleteTeachplan(courseId);
     }
 
 }
