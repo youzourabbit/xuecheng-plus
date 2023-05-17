@@ -111,9 +111,21 @@
                  left join teachplan two on two.parentid = one.id
                  left join teachplan_media tm on one.id = tm.teachplan_id
         where one.parentid = 0
-          and one.course_id = #{id}
+          and one.course_id = #{courseId}
         order by one.orderby, two.orderby
     </select>
 
+    <select id="selectByParentId" parameterType="Long" resultType="com.xuecheng.content.model.po.Teachplan">
+        select *
+        from teachplan
+        where parentid = #{parentId}
+    </select>
+
+   <!-- <select id="selectByParentidAndOrderby" resultType="com.xuecheng.content.model.po.Teachplan">
+        select *
+        from teachplan
+        where parentid = #{parentId}
+          and orderby = #{orderby};
+    </select>-->
 
 </mapper>

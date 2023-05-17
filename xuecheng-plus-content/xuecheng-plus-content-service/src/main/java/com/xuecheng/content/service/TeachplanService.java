@@ -22,4 +22,6 @@ public interface TeachplanService {
     void saveTeachplan(SaveTeachplanDto teachplanDto);
 
     void deleteTeachplan(Long courseId);
+
+    void moveTeachplan(Long courseId,String moveValue);
 }

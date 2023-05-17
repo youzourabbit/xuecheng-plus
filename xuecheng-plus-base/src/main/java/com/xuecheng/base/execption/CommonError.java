@@ -8,8 +8,10 @@ public enum CommonError {
     PARAMS_ERROR("非法参数"),
     OBJECT_NULL("对象为空"),
     QUERY_NULL("查询结果为空"),
-    REQUEST_NULL("请求参数为空");
+    REQUEST_NULL("请求参数为空"),
+    TEACHPLAN_TREE_NODE_EXIT(120409,"课程计划信息还有子级信息，无法操作");
 
+    private int errCode;
     private String errMessage;
 
     public String getErrMessage() {
@@ -17,6 +19,11 @@ public enum CommonError {
     }
 
     private CommonError( String errMessage) {
+        this.errMessage = errMessage;
+    }
+
+    private CommonError(int errCode,String errMessage){
+        this.errCode = errCode;
         this.errMessage = errMessage;
     }
 

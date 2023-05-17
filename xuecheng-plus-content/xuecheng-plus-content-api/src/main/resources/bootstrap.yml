@@ -1,32 +1,53 @@
-server:
-  servlet:
-    context-path: /content # 所有content的根路径
-  port: 63040 # 服务器的端口
-#微服务配置
+#server:
+#  servlet:
+#    context-path: /content # 所有content的根路径
+#  port: 63040 # 服务器的端口
+  # 微服务配置
 spring:
   application:
     name: content-api
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.153.135:3306/xuecheng-content?serverTimezone=UTC&userUnicode=true&useSSL=false&
-    username: root
-    password: root
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://192.168.153.135:3306/xuecheng-content?serverTimezone=UTC&userUnicode=true&useSSL=false&
+#    username: root
+#    password: root
   cloud:
+
     nacos:
-      server-addr: 192.168.153.135:8849
+      server-addr: 47.108.48.42:8848
       discovery:
         namespace: dev
         group: xuecheng-plus-project
+      # 导入nacos-config依赖，将部分配置文件上传至nacos进行统一管理，取而代之的是nacos配置的三要素
+      config:
+        namespace: dev
+        group: xuecheng-plus-project # 为自己配置
+        file-extension: yml
+        refresh-enabled: true
+        shared-configs:
+          - data-id: swagger-${spring.profiles.active}.yml # 将自己所属的依赖配置交给nacos端控制
+            group: xuecheng-plus-common # 通用配置文件
+            refresh: true
+          - data-id: logging-${spring.profiles.active}.yml # 为自己导入的依赖配置
+            group: xuecheng-plus-common # 通用配置文件
+            refresh: true
+        extension-configs:
+          - data-id: content-service-${spring.profiles.active}.yml #为别的模块——content_service配置
+            group: xuecheng-plus-project
+            refresh: true
+
+  profiles:
+    active: dev # 用于生成名称的三要素之一
 
 # 日志文件配置路径
-logging:
-  config: classpath:log4j2-dev.xml
+#logging:
+#  config: classpath:log4j2-dev.xml
 
 # 配置swagger基本信息
-swagger:
-  title: "学成在线内容管理系统"
-  description: "内容系统管理系统对课程相关信息进行管理"
-  base-package: com.xuecheng.content # 扫描的包
-  enabled: true # 启用此配置的意思？
-  version: 1.0.0
+#swagger:
+#  title: "学成在线内容管理系统"
+#  description: "内容系统管理系统对课程相关信息进行管理"
+#  base-package: com.xuecheng.content # 扫描的包
+#  enabled: true # 启用此配置的意思？
+#  version: 1.0.0
 

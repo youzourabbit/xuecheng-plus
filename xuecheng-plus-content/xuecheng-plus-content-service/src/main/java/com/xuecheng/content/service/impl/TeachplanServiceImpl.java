@@ -1,6 +1,7 @@
 package com.xuecheng.content.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.xuecheng.base.execption.XueChengPlusException;
 import com.xuecheng.content.mapper.TeachplanMapper;
 import com.xuecheng.content.model.dto.SaveTeachplanDto;
 import com.xuecheng.content.model.dto.TeachplanDto;
@@ -41,6 +42,8 @@ public class TeachplanServiceImpl implements TeachplanService {
 
             Long parentid = teachplanDto.getParentid();// 查询父节点id
             Long courseId = teachplanDto.getCourseId();// 查询课程id
+
+            // 定义一个查询用的容器，限定范围指定在courseId，parentId
             LambdaQueryWrapper<Teachplan> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper = queryWrapper.eq(Teachplan::getCourseId, courseId).eq(Teachplan::getParentid, parentid);
             // 查询符合条件的数据字段数量(课程id，父节点id)(课程id是一整个分类，就比如课程id117)
@@ -57,9 +60,78 @@ public class TeachplanServiceImpl implements TeachplanService {
         }
     }
 
+    private Teachplan getTeachplan(Long courseId) {
+        return teachplanMapper.selectById(courseId);
+    }
+
     @Override
     public void deleteTeachplan(Long courseId) {
-        teachplanMapper.deleteById(courseId);
+
+        Teachplan teachplan1 = getTeachplan(courseId);
+        TeachplanDto teachplanDto = new TeachplanDto();
+        BeanUtils.copyProperties(teachplan1, teachplanDto);
+        Long parentid1 = teachplan1.getParentid();
+        if (parentid1 == 0L) {
+            List<Teachplan> teachplans = teachplanMapper.selectByParentId(teachplanDto.getId());
+            if (!teachplans.isEmpty()) {
+                XueChengPlusException.cast(120409, "本章节还有课程存在，无法删除");
+            }
+        }
+        teachplanMapper.deleteById(teachplanDto);
+        //TeachplanDto teachplanDto = teachplanTree.get(0);
+        // 判断父节点id是否为0
+        //Long parentid = teachplanDto.getParentid();
+        /*if (parentid == 0) {
+            Teachplan teachplan = new Teachplan();
+            BeanUtils.copyProperties(teachplanDto, teachplan);
+            LambdaQueryWrapper<Teachplan> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper = queryWrapper.eq(Teachplan::getParentid, courseId);//尝试：由于判定了本节点是父节点，所以以本节点的courseId当做查询条件的parentId
+            int count = teachplanMapper.selectCount(queryWrapper);
+            if (count > 0) {
+                XueChengPlusException.cast(120409, "本章节还有课程存在，无法删除");
+            }else {
+                teachplanMapper.deleteById(teachplanDto);
+            }
+        }else {
+            teachplanMapper.deleteById(teachplanDto);
+        }*/
+    }
+
+    @Override
+    public void moveTeachplan(Long courseId, String moveValue) {
+        Teachplan teachplan = teachplanMapper.selectById(courseId);
+        Integer orderby = teachplan.getOrderby();
+        Long parentid = teachplan.getParentid();
+        if (moveValue.equals("moveup")) {
+            // 需要获取orderby数据
+            if (orderby > 1) {
+                Teachplan plan_top = new Teachplan();
+                plan_top.setOrderby(orderby - 1);
+                plan_top.setParentid(parentid);
+                plan_top = teachplanMapper.selectById(plan_top);
+                plan_top.setOrderby(orderby);
+                teachplan.setOrderby(orderby - 1);
+                teachplanMapper.updateById(plan_top);
+                teachplanMapper.updateById(teachplan);
+            } else {
+                XueChengPlusException.cast("已经处于本章最顶部");
+            }
+        } else if (moveValue.equals("movedown")) {
+            Teachplan plan_bottom = new Teachplan();
+            plan_bottom.setParentid(parentid);
+            plan_bottom.setOrderby(orderby+1);
+            plan_bottom = teachplanMapper.selectById(plan_bottom);
+            if (plan_bottom != null) {
+                plan_bottom.setOrderby(orderby);
+                teachplan.setOrderby(orderby + 1);
+                teachplanMapper.updateById(plan_bottom);
+                teachplanMapper.updateById(teachplan);
+            } else {
+                XueChengPlusException.cast("已经处于本章最底部");
+            }
+        } else {
+            XueChengPlusException.cast("未知错误");
+        }
     }
 
 }

@@ -18,4 +18,8 @@ public interface TeachplanMapper extends BaseMapper<Teachplan> {
     // 课程计划查询(额外定义的一个接口中类)
     List<TeachplanDto> selectTreeNodes(Long courseId);
 
+    List<Teachplan> selectByParentId(Long parentId);
+
+    //Teachplan selectByParentidAndOrderby(Long parentid, int orderby);
+
 }

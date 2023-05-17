@@ -30,7 +30,12 @@ public class GlobalExceptionHandler {
         //使用log日志记录异常
         log.error("【系统异常】{}", e.getErrMessage(), e);
         String errMessage = e.getErrMessage();
+        int errCode = e.getErrCode();
         RestErrorResponse restErrorResponse = new RestErrorResponse(errMessage);
+        if (errCode != 0) {
+            RestErrorResponse restErrorResponse_errCode = new RestErrorResponse(errCode, errMessage);
+            return restErrorResponse_errCode;
+        }
         return restErrorResponse;
 
     }
