@@ -1,8 +1,9 @@
-#server:
-#  servlet:
-#    context-path: /content # 所有content的根路径
-#  port: 63040 # 服务器的端口
+server:
+  servlet:
+    context-path: /content # 所有content的根路径
+  port: 63040 # 服务器的端口
   # 微服务配置
+  address: 127.0.0.1
 spring:
   application:
     name: content-api
@@ -32,7 +33,7 @@ spring:
             group: xuecheng-plus-common # 通用配置文件
             refresh: true
         extension-configs:
-          - data-id: content-service-${spring.profiles.active}.yml #为别的模块——content_service配置
+          - data-id: content-service-${spring.profiles.active}.yml #为别的模块——content-service配置
             group: xuecheng-plus-project
             refresh: true
 

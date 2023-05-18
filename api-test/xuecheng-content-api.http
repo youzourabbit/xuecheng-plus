@@ -133,13 +133,16 @@ GET localhost:63010/content/teachplan/117/tree-nodes
 
 ### 网关生效测试
 
-POST localhost:63010/content/course/list?pageSize=2&pageNo=1
+POST {{gateway_host}}/content/course/list?pageSize=2&pageNo=1
 Content-Type: application/json
 
 {
   "audioStatus": "202004",
-  "course": "java"
+  "course": "java",
+  "publishStatus": ""
 }
 
 
+###
+GET {{gateway_host}}/system/dictionary/all
 
