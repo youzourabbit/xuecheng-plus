@@ -6,5 +6,6 @@
 #    url: jdbc:mysql://192.168.153.135:3306/xuechengsystem?serverTimeZone=UTC&userUnicode=true&useSSL=false
 #    username: root
 #    password: root
-logging:
-  config: classpath:log4j2-dev.xml
+
+#logging:
+#  config: classpath:log4j2-dev.xml

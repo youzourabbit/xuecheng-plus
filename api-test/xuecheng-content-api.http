@@ -3,13 +3,6 @@
 # POST http://localhost:63040/content/course/list?pageSize=2&pageNo=1
 
 # 使用http-client.env.json配置环境
-POST {{content_host}}/content/course/list?pageSize=2&pageNo=1
-Content-Type: application/json
-
-{
-  "audioStatus": "202004",
-  "course": "java"
-}
 
 ###
 GET http://localhost:63040/content/course-category/tree-nodes
@@ -38,7 +31,6 @@ Content-Type: application/json
   "phone": "123456",
   "validDays": 365
 }
-
 
 ### 查询课程信息
 
@@ -131,18 +123,33 @@ POST {{content_host}}/content/teachplan/moveup/
 
 GET localhost:63010/content/teachplan/117/tree-nodes
 
-### 网关生效测试
-
+### 网关生效测试--content模块
 POST {{gateway_host}}/content/course/list?pageSize=2&pageNo=1
 Content-Type: application/json
 
 {
   "audioStatus": "202004",
-  "course": "java",
-  "publishStatus": ""
+  "course": "java"
 }
+
+###  网关生效测试--system模块
+GET {{gateway_host}}/system/dictionary/all
 
 
 ###
-GET {{gateway_host}}/system/dictionary/all
+GET {{system_host}}/system/dictionary/all
+
+###
+
+POST {{content_host}}/content/course/list?pageSize=2&pageNo=1
+Content-Type: application/json
+
+{
+  "audioStatus": "202004",
+  "course": "java"
+}
+
+###
+
+GET {{content_host}}/course/course-category/tree-nodes
 
