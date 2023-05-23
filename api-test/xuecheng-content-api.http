@@ -149,7 +149,20 @@ Content-Type: application/json
   "course": "java"
 }
 
-###
+### 未知原因404 not found
 
 GET {{content_host}}/course/course-category/tree-nodes
+
+###
+POST {{media_host}}/media/files
+
+### 上传本地图片到minio测试  (230523 18:18成功
+POST {{media_host}}/media/upload/coursefile
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="filedata"; filename="1.jpg"
+Content-Type: application/octet-stream
+
+< f:/minio/upload/1.jpg
 

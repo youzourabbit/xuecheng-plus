@@ -34,6 +34,7 @@ public class MediaFilesController {
 
  @ApiOperation("媒资列表查询接口")
  @PostMapping("/files")
+ //页面参数
  public PageResult<MediaFiles> list(PageParams pageParams, @RequestBody QueryMediaParamsDto queryMediaParamsDto){
   Long companyId = 1232141425L;
   return mediaFileService.queryMediaFiels(companyId,pageParams,queryMediaParamsDto);
@@ -41,8 +42,10 @@ public class MediaFilesController {
  }
 
  @ApiOperation("上传图片")
- @RequestMapping(value = "/upload/coursefile",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-public UploadFileResultDto upload(@RequestPart("filedata")MultipartFile filedata) throws IOException {
+ @RequestMapping(value = "/upload/coursefile",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)//consumes
+ @ResponseBody
+ /*requestpart与requestparam相似，前者是用于网页的multipart/form-data*/
+public UploadFileResultDto upload(@RequestPart("filedata")MultipartFile filedata) throws IOException {//返回值为传输实体对象
 
     //准备上传文件的信息
      UploadFileParamsDto uploadFileParamsDto = new UploadFileParamsDto();

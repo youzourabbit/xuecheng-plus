@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.j256.simplemagic.ContentInfo;
 import com.j256.simplemagic.ContentInfoUtil;
-import com.xuecheng.base.exception.XueChengPlusException;
+import com.xuecheng.base.execption.XueChengPlusException;
 import com.xuecheng.base.model.PageParams;
 import com.xuecheng.base.model.PageResult;
 import com.xuecheng.media.mapper.MediaFilesMapper;
@@ -17,7 +17,6 @@ import io.minio.MinioClient;
 import io.minio.UploadObjectArgs;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -46,6 +44,7 @@ public class MediaFileServiceImpl implements MediaFileService {
     @Autowired
     MediaFilesMapper mediaFilesMapper;
 
+    /*使用minio所必须的接口*/
     @Autowired
     MinioClient minioClient;
 
@@ -85,9 +84,9 @@ public class MediaFileServiceImpl implements MediaFileService {
         if(extension == null){
             extension = "";
         }
-        //根据扩展名取出mimeType
-        ContentInfo extensionMatch = ContentInfoUtil.findExtensionMatch(extension);
-        String mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;//通用mimeType，字节流
+        //根据扩展名取出mimeType（mimeType二进制文件拓展名）
+        ContentInfo extensionMatch = ContentInfoUtil.findExtensionMatch(extension);//获取拓展名
+        String mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;//通用mimeType，字节流，默认值是无类型还是啥来着
         if(extensionMatch!=null){
             mimeType = extensionMatch.getMimeType();
         }
@@ -113,6 +112,7 @@ public class MediaFileServiceImpl implements MediaFileService {
                     .build();
             //上传文件
             minioClient.uploadObject(uploadObjectArgs);
+            // 使用{}接收后续对象的内容
             log.debug("上传文件到minio成功,bucket:{},objectName:{},错误信息:{}",bucket,objectName);
             return true;
         } catch (Exception e) {
@@ -147,14 +147,14 @@ public class MediaFileServiceImpl implements MediaFileService {
         //先得到扩展名
         String extension = filename.substring(filename.lastIndexOf("."));
 
-        //得到mimeType
+        //得到mimeType,mimeType也不能写死
         String mimeType = getMimeType(extension);
 
         //子目录
         String defaultFolderPath = getDefaultFolderPath();
         //文件的md5值
         String fileMd5 = getFileMd5(new File(localFilePath));
-        String objectName = defaultFolderPath+fileMd5+extension;
+        String objectName = defaultFolderPath+fileMd5+extension;//文件路径(年/月/日)+md5值+拓展名（作用：使用md5值当做文件名，避免传输过程中md5校验受网络影响）
         //上传文件到minio
         boolean result = addMediaFilesToMinIO(localFilePath, mimeType, bucket_mediafiles, objectName);
         if(!result){
@@ -172,7 +172,6 @@ public class MediaFileServiceImpl implements MediaFileService {
         return uploadFileResultDto;
     }
 
-
     /**
      * @description 将文件信息添加到文件表
      * @param companyId  机构id
@@ -184,7 +183,7 @@ public class MediaFileServiceImpl implements MediaFileService {
      * @author Mr.M
      * @date 2022/10/12 21:22
      */
-    @Transactional
+    @Transactional /**/
     public MediaFiles addMediaFilesToDb(Long companyId,String fileMd5,UploadFileParamsDto uploadFileParamsDto,String bucket,String objectName){
         //将文件信息保存到数据库
         MediaFiles mediaFiles = mediaFilesMapper.selectById(fileMd5);

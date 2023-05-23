@@ -61,16 +61,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-        <!--根据扩展名取mimetype-->
+        <!--根据扩展名取mimetype：用于media模块的数据类型归类处理-->
         <dependency>
             <groupId>com.j256.simplemagic</groupId>
             <artifactId>simplemagic</artifactId>
             <version>1.17</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>

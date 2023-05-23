@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author Mr.M
  * @version 1.0
- * @description TODO
+ * @description TODO 配置类
  * @date 2023/2/17 15:00
  */
 @Configuration
 public class MinioConfig {
- @Value("${minio.endpoint}")
+ @Value("${minio.endpoint}")//读取nacos的配置文件，将数据注入到对象中
  private String endpoint;
  @Value("${minio.accessKey}")
  private String accessKey;
@@ -28,7 +28,7 @@ public class MinioConfig {
                   .endpoint(endpoint)
                   .credentials(accessKey, secretKey)
                   .build();
-  return minioClient;
+  return minioClient;//返回一个minio存取对象
  }
 
 

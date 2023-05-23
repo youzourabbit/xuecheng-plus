@@ -11,6 +11,7 @@ import lombok.ToString;
  */
 @Data
 @ToString
+/*模型类*/
 public class UploadFileParamsDto {
 
     /**
