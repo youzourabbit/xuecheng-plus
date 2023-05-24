@@ -22,7 +22,7 @@ Content-Type: application/json
   "users": "使用人群",
   "tags": "zxcvb",
   "grade": "204001",
-  "description": "descriptiondescriptiondescription",
+  "description": "description description description",
   "charge": "201001",
   "price": 1,
   "originalPrice":20,
@@ -88,7 +88,7 @@ Content-Type: application/json
   "price": 0.01
 }
 
-###
+### 获取课程号为117的课程的节点
 
 GET {{content_host}}/content/teachplan/117/tree-nodes
 
@@ -149,9 +149,13 @@ Content-Type: application/json
   "course": "java"
 }
 
+### 未知原因404 not found  (context-path写成了content-path、路径也写错了
+
+GET {{content_host}}/content/course-category/tree-nodes
+
 ### 未知原因404 not found
 
-GET {{content_host}}/course/course-category/tree-nodes
+GET {{gateway_host}}/content/course-category/tree-nodes
 
 ###
 POST {{media_host}}/media/files
