@@ -42,6 +42,7 @@ nacos 服务注册中心（使用1.4.1，新版本不明原因不可下载)
 # 使用git控制版本，搭建gogs
 * （也可以使用github，不过搭建私服仓库也属于一种技能）
 
+
 修改容器自启动：docker update --restart=always nacosConteiner
 docker无法找到并运行已下载容器——直接使用IMAGE ID：docker run --name nacosContainer -e MODE=standalone -p 8849:8848 -d  eec289123412
 
@@ -74,6 +75,8 @@ git push -u origin #(master/dev)注意想推送哪个分支
 打开git log（日志），小铅笔表示当前分支，日志界面右键dev，将其推送到远程仓库
 接下来在dev分支开发，完成后才合并到master
 文档中的要求：完成任务前都创建新的分支，在新的分支中进行
+
+(使用github：第一次使用需要注意sshkey的验证，在本地初始化一个sshkey的命令是：$ ssh-keygen -t rsa -C 'youzou_rabbit@163.com'，然后把制定目录下的.pub内容复制到github中的ssh秘钥上，否则github的上传、拉取代码将无法运行)
 
 # 开始创建父工程
 在文件->项目结构中编辑，
