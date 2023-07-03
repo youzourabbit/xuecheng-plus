@@ -30,13 +30,13 @@ import java.util.*;
 public class TeachplanServiceImpl implements TeachplanService {
 
   @Autowired
- TeachplanMapper teachplanMapper;
+  TeachplanMapper teachplanMapper;
 
   @Autowired
- CourseBaseMapper courseBaseMapper;
+  CourseBaseMapper courseBaseMapper;
 
   @Autowired
- TeachplanMediaMapper teachplanMediaMapper;
+  TeachplanMediaMapper teachplanMediaMapper;
 
  @Override
  public List<TeachplanTreeDto> findTeachplayTree(long courseId) {

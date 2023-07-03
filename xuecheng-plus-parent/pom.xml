@@ -173,6 +173,14 @@
         </dependencies>
 
     </dependencyManagement>
+
+    <!--作为父工程，引进自己管理的模块-->
+    <modules>
+        <module>../xuecheng-plus-base</module>
+        <module>../xuecheng-plus-content</module>
+        <module>../xuecheng-plus-gateway</module>
+    </modules>
+
     <build>
         <finalName>${project.name}</finalName>
         <!--编译打包过虑配置-->

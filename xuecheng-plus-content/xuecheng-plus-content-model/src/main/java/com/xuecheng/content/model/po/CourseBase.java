@@ -28,11 +28,13 @@ public class CourseBase implements Serializable {
     /**
      * 机构ID
      */
+//    @TableField("company_id")
     private Long companyId;
 
     /**
      * 机构名称
      */
+//    @TableField("company_name")
     private String companyName;
 
     /**
@@ -58,6 +60,7 @@ public class CourseBase implements Serializable {
     /**
      * 课程大类名称
      */
+//    @TableField("mt_name")
     private String mtName;
 
     /**
@@ -68,6 +71,7 @@ public class CourseBase implements Serializable {
     /**
      * 课程小类名称
      */
+//    @TableField("st_name")
     private String stName;
 
     /**
@@ -105,16 +109,19 @@ public class CourseBase implements Serializable {
     /**
      * 创建人
      */
+//    @TableField("create_people")
     private String createPeople;
 
     /**
      * 更新人
      */
+//    @TableField("change_people")
     private String changePeople;
 
     /**
      * 审核状态
      */
+//    @TableField("audit_status")
     private String auditStatus;
 
 
@@ -127,11 +134,13 @@ public class CourseBase implements Serializable {
     /**
      * 课程发布标识
      */
+//    @TableField("course_pub_id")
     private Long coursePubId;
 
     /**
      * 课程发布时间
      */
+//    @TableField("course_pub_date")
     private LocalDateTime coursePubDate;
 
 

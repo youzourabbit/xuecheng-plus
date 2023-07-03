@@ -14,11 +14,13 @@ import org.springframework.context.annotation.Configuration;
  @Configuration
 public class MinioConfig {
 
-
+//对外服务器的访问域名
  @Value("${minio.endpoint}")
  private String endpoint;
+ //minio的账号
  @Value("${minio.accessKey}")
  private String accessKey;
+ //minio的密码
  @Value("${minio.secretKey}")
  private String secretKey;
 

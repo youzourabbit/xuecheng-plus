@@ -8,6 +8,16 @@ Content-Type: application/json
   "auditStatus": ""
 }
 
+###（通过网关）查询所有媒体资源
+POST localhost:63010/media/files?pageNo=1&pageSize=1
+Content-Type: application/json
+
+{
+  "filename": "",
+  "fileType": "",
+  "auditStatus": ""
+}
+
 
 ### 上传文件
 POST {{media_host}}/media/upload/coursepic
@@ -19,3 +29,21 @@ Content-Type: application/octet-stream
 
 < d:/develop/upload/1.jpg
 
+### 上传文件
+POST localhost:63050/media/upload/coursepic
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="filedata"; filename="1.jpg"
+Content-Type: application/octet-stream
+
+< d:/develop/upload/1.jpg
+
+###上传视频
+POST localhost:63050/mediafiles
+
+### 上传一张图片(作为课程的封面)
+POST localhost:63050/media/upload/coursefile
+Content-Type: multipart/form-data;form-data; name="filedata"; filename="filename"
+
+< d:/develop/upload/1.jpg

@@ -2,10 +2,13 @@ package com.xuecheng.content.api;
 
 import com.xuecheng.content.model.dto.SaveTeachplanDto;
 import com.xuecheng.content.model.dto.TeachplanTreeDto;
+import com.xuecheng.content.service.CourseCategoryService;
 import com.xuecheng.content.service.TeachplanService;
+import com.xuecheng.content.model.dto.CourseCategoryTreeDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +33,15 @@ public class TeachplanController {
     public List<TeachplanTreeDto> getTreeNodes(@PathVariable Long courseId){
         return teachplanService.findTeachplayTree(courseId);
     }
+
+//    @ApiOperation("获取所有课程计划")
+//    @ApiImplicitParam(value = "courseId",name = "课程基础Id值",required = true,dataType = "Long",paramType = "path")
+//    @GetMapping("/course-category/tree-nodes")
+//    public List<TeachplanTreeDto> getAllTreeNodes(){
+//        return teachplanService.findTeachplayTree(0);
+//    }
+
+
 
     @ApiOperation("课程计划创建或修改")
     @PostMapping("/teachplan")

@@ -18,7 +18,6 @@ spring:
             group: xuecheng-plus-common
             refresh: true
 
-
   profiles:
     active: dev
 

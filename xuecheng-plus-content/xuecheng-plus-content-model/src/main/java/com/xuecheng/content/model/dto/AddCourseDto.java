@@ -19,6 +19,9 @@ import java.math.BigDecimal;
 @ApiModel(value="AddCourseDto", description="新增课程基本信息")
 public class AddCourseDto {
 
+
+// JSR303校验样例，通过各种约束对传进的数据进行合法性校验
+ //JSR303是一个SpringBoot提供的，validation依赖
  @NotEmpty(groups = {ValidationGroups.Inster.class},message = "添加课程名称不能为空")
  @NotEmpty(groups = {ValidationGroups.Update.class},message = "修改课程名称不能为空")
  @NotEmpty(message = "课程名称不能为空")

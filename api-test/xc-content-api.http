@@ -1,4 +1,13 @@
 ### 课程查询列表
+POST localhost:63010/content/course/list?pageNo=2&pageSize=1
+Content-Type: application/json
+
+{
+  "auditStatus": "202004",
+  "courseName": ""
+}
+
+### 课程查询列表
 POST {{gateway_host}}/content/course/list?pageNo=2&pageSize=1
 Content-Type: application/json
 
@@ -317,3 +326,13 @@ Content-Type: application/json
 #   ],
 #   "teachplanMedia" : null
 #}
+
+### 获取教学计划
+GET localhost:63010/content/teachplan/25/tree-nodes
+
+### 获取全部计划叶子结点
+GET localhost:63040/content/course-category/tree-nodes
+
+
+### 获取全部计划叶子结点(通过网关)
+GET localhost:63010/content/course-category/tree-nodes

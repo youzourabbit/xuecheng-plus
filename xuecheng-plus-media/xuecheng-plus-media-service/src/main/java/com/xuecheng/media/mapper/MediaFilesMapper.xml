@@ -11,9 +11,11 @@
         <result column="file_type" property="fileType" />
         <result column="tags" property="tags" />
         <result column="bucket" property="bucket" />
+<!--        对比数据库，这里少了file_path-->
         <result column="file_id" property="fileId" />
         <result column="url" property="url" />
-        <result column="timelength" property="timelength" />
+<!--        对比数据库，这里多了timelength-->
+<!--        <result column="timelength" property="timelength" />-->
         <result column="username" property="username" />
         <result column="create_date" property="createDate" />
         <result column="change_date" property="changeDate" />
