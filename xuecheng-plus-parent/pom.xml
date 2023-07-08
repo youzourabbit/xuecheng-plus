@@ -218,11 +218,11 @@
                     <target>1.8</target>
                     <!--配置注解预编译-->
                     <annotationProcessorPaths>
-<!--                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${org.mapstruct.version}</version>
-                        </path>-->
+                        <!--                        <path>
+                                                    <groupId>org.mapstruct</groupId>
+                                                    <artifactId>mapstruct-processor</artifactId>
+                                                    <version>${org.mapstruct.version}</version>
+                                                </path>-->
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>

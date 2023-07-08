@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ###（通过网关）查询所有媒体资源
-POST localhost:63010/media/files?pageNo=1&pageSize=1
+POST localhost:63010/media/files?pageNo=1&pageSize=10
 Content-Type: application/json
 
 {
@@ -47,3 +47,16 @@ POST localhost:63050/media/upload/coursefile
 Content-Type: multipart/form-data;form-data; name="filedata"; filename="filename"
 
 < d:/develop/upload/1.jpg
+
+### 测试使用md5从数据库中获取文件信息
+POST localhost:63010/media/upload/checkfile?fileMd5=1d0f0e6ed8a0c4a89bfd304b84599d9c
+
+
+### 测试使用查询到数据库已经存在的视频文件信息，进入到minio桶中进行查询
+POST localhost:63010/media/upload/checkchunk?fileMd5=1f229319d6fed3431d2f9d06193a433b&chunk=0
+
+### 测试上传一个分块
+POST localhost:63050/media/upload/uploadchunk
+Content-Type: multipart/form-data;form-data; name="filedata"; filename="filename"
+
+< D:\minio\upload\chunk\0

@@ -1,5 +1,11 @@
 #微服务配置
 spring:
+#  对Minio的文件上限大小限制进行解除
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
   application:
     name: media-api
   cloud:

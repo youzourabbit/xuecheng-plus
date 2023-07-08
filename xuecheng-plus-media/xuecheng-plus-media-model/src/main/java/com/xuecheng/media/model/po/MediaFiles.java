@@ -25,6 +25,9 @@ public class MediaFiles implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
+    /*缺少字段：filepath，自主进行添加*/
+    private String filePath;
+
     /**
      * 机构ID
      */

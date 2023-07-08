@@ -48,6 +48,7 @@ public class MediaFilesController {
     @ApiOperation("上传图片")
     @RequestMapping(value = "/upload/coursefile"/*此处额外添加*/, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
+    // MultipartFile是一个解决原生，上传二进制HttpServletRequest数据时，需要自己再进行转换为File类的工具类，可以简化上传操作
     public UploadFileResultDto upload(@RequestParam("filedata") MultipartFile upload) throws IOException {
 
         Long companyId = 1232141425L;
@@ -55,7 +56,7 @@ public class MediaFilesController {
         uploadFileParamsDto.setFileSize(upload.getSize());
         uploadFileParamsDto.setFileType("001001");
         uploadFileParamsDto.setTags("课程图片");
-        uploadFileParamsDto.setRemark("");
+        uploadFileParamsDto.setRemark("");//备注
         uploadFileParamsDto.setFilename(upload.getOriginalFilename());
         ContentInfo extensionMatch = ContentInfoUtil.findExtensionMatch(upload.getOriginalFilename());
         String mimeType = extensionMatch.getMimeType();

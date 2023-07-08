@@ -12,6 +12,7 @@
         <result column="tags" property="tags" />
         <result column="bucket" property="bucket" />
 <!--        对比数据库，这里少了file_path-->
+        <result column="file_path" property="filePath" />
         <result column="file_id" property="fileId" />
         <result column="url" property="url" />
 <!--        对比数据库，这里多了timelength-->

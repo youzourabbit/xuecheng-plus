@@ -58,5 +58,10 @@ public class MediaProcess implements Serializable {
      */
     private String url;
 
+    /**
+     * 失败数量统计
+     */
+    private int failCount;
+
 
 }
