@@ -68,7 +68,7 @@ public class BigFilesController {
         uploadFileParamsDto.setTags("课程视频");
         uploadFileParamsDto.setRemark("");//设置备注
         uploadFileParamsDto.setFilename(fileName);
-        RestResponse restResponse = mediaFileService.mergeChunk(companyId, fileMd5, fileName, chunkTotal, uploadFileParamsDto);
+        RestResponse restResponse = mediaFileService.mergeChunk(companyId,fileMd5,chunkTotal,uploadFileParamsDto);
         return restResponse;
 
     }

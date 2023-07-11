@@ -63,5 +63,15 @@ public class MediaProcess implements Serializable {
      */
     private int failCount;
 
+    /**
+     * 失败后日志信息
+     */
+    private String errorMsg;
+
+    /**
+     * 文件最终存储在Minio的路径
+     */
+    private String filePath;
+
 
 }

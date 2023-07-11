@@ -1,8 +1,15 @@
 package com.xuecheng.media;
 
+import com.j256.simplemagic.ContentInfo;
+import com.j256.simplemagic.ContentInfoUtil;
+import com.xuecheng.media.model.dto.UploadFileParamsDto;
+import com.xuecheng.media.service.MediaFileService;
 import io.minio.*;
 import io.minio.errors.MinioException;
 import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -19,7 +26,7 @@ public class MinIOTest {
 
  static MinioClient minioClient =
          MinioClient.builder()
-                 .endpoint("http://localhost:9000")
+                 .endpoint("http://192.168.101.65:9000")
                  .credentials("minioadmin", "minioadmin")
                  .build();
 
@@ -117,12 +124,42 @@ public class MinIOTest {
  }
 
 
+ public static void uploadByInterface(){
+  UploadFileParamsDto uploadFileParamsDto = new UploadFileParamsDto();
+
+  File file = new File("D:\\minio\\upload\\3.mp4");
+  FileInputStream fis = null;
+  byte[] bytes = null;
+  try {
+   fis = new FileInputStream(file);
+   bytes = new byte[(int) file.length()];
+   fis.read(bytes);
+   fis.close();
+  } catch (IOException e) {
+   e.printStackTrace();
+  }
+
+
+  uploadFileParamsDto.setFileSize(file.length());
+  uploadFileParamsDto.setFileType("001001");
+  uploadFileParamsDto.setTags("课程视频");
+  uploadFileParamsDto.setRemark("");//备注
+  uploadFileParamsDto.setFilename(file.getName());
+  String fileName = file.getName();
+  String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+  ContentInfo extensionMatch = ContentInfoUtil.findExtensionMatch(fileExtension);
+  String mimeType = extensionMatch.getMimeType();
+  uploadFileParamsDto.setContentType(mimeType);
+//  mediaFileService.uploadFile(1L,uploadFileParamsDto,bytes);
+ }
+
  public static void main(String[] args)throws IOException, NoSuchAlgorithmException, InvalidKeyException {
   upload();
 //  delete("testbucket","1.mp4");
 //  delete("testbucket","avi/1.avi");
 
 //  getFile("testbucket","avi/1.avi","D:\\develop\\minio_data\\");
+//  uploadByInterface();
  }
 
 

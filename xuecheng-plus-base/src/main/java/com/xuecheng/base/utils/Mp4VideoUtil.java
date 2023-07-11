@@ -67,7 +67,7 @@ public class Mp4VideoUtil extends VideoUtil {
         commend.add("12");
 //        commend.add("-vsync 0");//指令未找到
 //        commend.add(mp4folder_path  + mp4_name );
-        commend.add(mp4folder_path + mp4_name);
+        commend.add(mp4folder_path);
 //        commend.add(mp4_name);
         String outstring = null;
         try {
@@ -83,8 +83,8 @@ public class Mp4VideoUtil extends VideoUtil {
             ex.printStackTrace();
 
         }
-//        Boolean check_video_time = this.check_video_time(video_path, mp4folder_path + mp4_name);
         Boolean check_video_time = this.check_video_time(video_path, mp4folder_path);
+//        Boolean check_video_time = this.check_video_time(video_path, mp4folder_path);
         if (!check_video_time) {
             return outstring;
         } else {

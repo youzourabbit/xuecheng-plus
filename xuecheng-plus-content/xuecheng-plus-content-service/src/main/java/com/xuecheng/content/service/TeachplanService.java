@@ -1,6 +1,7 @@
 package com.xuecheng.content.service;
 
 import com.xuecheng.content.model.dto.*;
+import com.xuecheng.content.model.po.TeachplanMedia;
 
 import java.util.List;
 
@@ -47,5 +48,7 @@ public interface TeachplanService {
   * @date 2022/9/9 20:35
  */
  public void moveTeachPlan(Long teachPlanId,String moveType);
+
+ public TeachplanMedia associationMedia(BindTeachPlanMediaDto bindTeachplanMediaDto);
 
  }

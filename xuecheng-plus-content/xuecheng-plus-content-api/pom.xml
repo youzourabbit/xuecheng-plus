@@ -12,6 +12,11 @@
     <description>xuecheng-plus-content-api</description>
 
     <dependencies>
+        <!--配合nginx使用的模板引擎，freemarker集成了结果视图-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -78,6 +83,8 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+
 
         <!-- Spring Boot 集成 log4j2 -->
         <dependency>

@@ -5,6 +5,7 @@ import com.xuecheng.base.execption.XueChengPlusException;
 import com.xuecheng.content.mapper.CourseBaseMapper;
 import com.xuecheng.content.mapper.TeachplanMapper;
 import com.xuecheng.content.mapper.TeachplanMediaMapper;
+import com.xuecheng.content.model.dto.BindTeachPlanMediaDto;
 import com.xuecheng.content.model.dto.SaveTeachplanDto;
 import com.xuecheng.content.model.dto.TeachplanTreeDto;
 import com.xuecheng.content.model.po.CourseBase;
@@ -37,6 +38,7 @@ public class TeachplanServiceImpl implements TeachplanService {
 
   @Autowired
   TeachplanMediaMapper teachplanMediaMapper;
+
 
  @Override
  public List<TeachplanTreeDto> findTeachplayTree(long courseId) {
@@ -180,6 +182,28 @@ public class TeachplanServiceImpl implements TeachplanService {
 
   swapTeachplan(one,two);
 
+ }
+
+ @Override
+ public TeachplanMedia associationMedia(BindTeachPlanMediaDto bindTeachplanMediaDto) {
+  //课程计划id
+  Long teachplanId = bindTeachplanMediaDto.getTeachplanId();
+  //课程id
+  Teachplan teachplan = teachplanMapper.selectById(teachplanId);
+  if (teachplan == null){
+   XueChengPlusException.cast("课程计划不存在");
+  }
+  Long courseId = teachplan.getCourseId();
+  //先删除原有记录，根据课程id删除其指定的资源
+  teachplanMediaMapper.delete(new LambdaQueryWrapper<TeachplanMedia>().eq(TeachplanMedia::getTeachplanId,teachplanId));
+  //再添加新记录
+  TeachplanMedia teachplanMedia = new TeachplanMedia();
+  BeanUtils.copyProperties(bindTeachplanMediaDto,teachplanMedia);
+  teachplanMedia.setCourseId(courseId);
+  teachplanMedia.setMediaFilename(bindTeachplanMediaDto.getFileName());
+  teachplanMediaMapper.insert(teachplanMedia);
+
+  return teachplanMedia;
  }
 
  //交换位置
